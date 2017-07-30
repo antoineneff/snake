@@ -28,6 +28,13 @@ class Snake {
             this.body.pop();
         }
     }
+
+    isDead() {
+        if (this.x < 0 || this.x > 19 || this.y < 0 || this.y > 19) {
+            return true;
+        }
+        return false;
+    }
 }
 
 class Food {
@@ -63,10 +70,8 @@ class Game {
         this.ctx.fillRect(0, 0, 400, 400);
     }
 
-    checkDeath() {
-        if (this.snake.x < 0 || this.snake.x > 19 || this.snake.y < 0 || this.snake.y > 19) {
-            clearInterval(this.interval);
-        }
+    stopLoop() {
+        clearInterval(this.interval);
     }
 
     listenToKeys() {
@@ -87,11 +92,14 @@ class Game {
     }
 
     loop() {
-        this.checkDeath();
-        this.clearCanvas();
         this.listenToKeys();
         this.snake.move();
-        this.render();
+        if (this.snake.isDead() === true) {
+            this.stopLoop();
+        } else {
+            this.clearCanvas();
+            this.render();
+        }
     }
 
     render() {
