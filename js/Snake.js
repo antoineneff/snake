@@ -47,9 +47,6 @@ class Snake {
     }
 
     isDead() {
-        if (this.x < 0 || this.x > 19 || this.y < 0 || this.y > 19 || this.bitesHisTail()) {
-            return true;
-        }
-        return false;
+        return (this.x < 0 || this.x > 19 || this.y < 0 || this.y > 19 || this.bitesHisTail());
     }
 }
