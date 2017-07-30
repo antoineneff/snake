@@ -29,6 +29,14 @@ class Snake {
         }
     }
 
+    eats(food) {
+        if (this.x === food.x && this.y === food.y) {
+            this.size += 1;
+            return true;
+        }
+        return false;
+    }
+
     isDead() {
         if (this.x < 0 || this.x > 19 || this.y < 0 || this.y > 19) {
             return true;
@@ -41,6 +49,11 @@ class Food {
     constructor() {
         this.x = 15;
         this.y = 5;
+    }
+
+    place() {
+        this.x = Math.floor(Math.random() * 20);
+        this.y = Math.floor(Math.random() * 20);
     }
 }
 
@@ -94,6 +107,9 @@ class Game {
     loop() {
         this.listenToKeys();
         this.snake.move();
+        if (this.snake.eats(this.food) === true) {
+            this.food.place();
+        }
         if (this.snake.isDead() === true) {
             this.stopLoop();
         } else {
