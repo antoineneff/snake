@@ -65,7 +65,6 @@ class Game {
 
     checkDeath() {
         if (this.snake.x < 0 || this.snake.x > 19 || this.snake.y < 0 || this.snake.y > 19) {
-            console.log('LOST');
             clearInterval(this.interval);
         }
     }
