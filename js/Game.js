@@ -14,7 +14,8 @@ class Game {
     addKeyEvents() {
         document.addEventListener('keypress', evt => {
             const keyCode = evt.keyCode || evt.charCode;
-            if (this.hasStarted === false && keyCode === 32) {
+            if (!this.hasStarted && keyCode === 32) {
+                this.hasStarted = true;
                 this.interval = setInterval(this.loop.bind(this), 1000/this.speed);
             }
         });
