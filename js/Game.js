@@ -7,29 +7,19 @@ class Game {
         this.interval = null;
         this.ctx = document.getElementById('game').getContext('2d');
 
+        this.addKeyEvents();
         this.startGame();
     }
 
-    startGame() {
-        this.render();
-        document.addEventListener('keypress', (evt) => {
-            if (this.hasStarted === false && evt.keyCode === 32) {
+    addKeyEvents() {
+        document.addEventListener('keypress', evt => {
+            const keyCode = evt.keyCode || evt.charCode;
+            if (this.hasStarted === false && keyCode === 32) {
                 this.interval = setInterval(this.loop.bind(this), 1000/this.speed);
             }
         });
-    }
 
-    clearCanvas() {
-        this.ctx.fillStyle = 'white';
-        this.ctx.fillRect(0, 0, 400, 400);
-    }
-
-    stopLoop() {
-        clearInterval(this.interval);
-    }
-
-    listenToKeys() {
-        document.addEventListener('keydown', (evt) => {
+        document.addEventListener('keydown', evt => {
             if (evt.keyCode === 37 && this.snake.direction !== 'right') {
                 this.snake.direction = 'left';
             }
@@ -45,8 +35,20 @@ class Game {
         });
     }
 
+    startGame() {
+        this.render();
+    }
+
+    clearCanvas() {
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillRect(0, 0, 400, 400);
+    }
+
+    stopLoop() {
+        clearInterval(this.interval);
+    }
+
     loop() {
-        this.listenToKeys();
         this.snake.move();
         if (this.snake.eats(this.food) === true) {
             this.food.place();
@@ -60,8 +62,13 @@ class Game {
     }
 
     render() {
-        this.ctx.fillStyle = 'black';
-        this.snake.body.forEach(part => {
+        this.snake.body.map((part, index) => {
+            if (index === 0) {
+                this.ctx.fillStyle = 'green';
+            } else if (index !== 0 && this.ctx.fillStyle !== 'black'){
+                this.ctx.fillStyle = 'black';
+            }
+
             this.ctx.fillRect(part.x * 20, part.y * 20, 20, 20);
         });
 
