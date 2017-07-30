@@ -31,7 +31,7 @@ class Game {
     constructor() {
         this.snake = new Snake;
         this.hasStarted = false;
-        this.speed = 20;
+        this.speed = 5;
         this.ctx = document.getElementById('game').getContext('2d');
 
         this.startGame();
