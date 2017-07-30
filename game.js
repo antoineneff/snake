@@ -2,6 +2,7 @@ class Snake {
     constructor() {
         this.x = 5;
         this.y = 5;
+        this.size = 1;
         this.direction = 'right';
         this.body = [{x: this.x, y: this.y}];
     }
@@ -23,13 +24,23 @@ class Snake {
         }
 
         this.body.unshift({x: this.x, y: this.y});
-        this.body.pop();
+        if (this.size < this.body.length) {
+            this.body.pop();
+        }
+    }
+}
+
+class Food {
+    constructor() {
+        this.x = 15;
+        this.y = 5;
     }
 }
 
 class Game {
     constructor() {
         this.snake = new Snake;
+        this.food = new Food;
         this.hasStarted = false;
         this.speed = 5;
         this.interval = null;
@@ -53,7 +64,8 @@ class Game {
     }
 
     checkDeath() {
-        if (this.snake.x < 0 || this.snake.x > 20 || this.snake.y < 0 || this.snake.y > 20) {
+        if (this.snake.x < 0 || this.snake.x > 19 || this.snake.y < 0 || this.snake.y > 19) {
+            console.log('LOST');
             clearInterval(this.interval);
         }
     }
@@ -88,6 +100,9 @@ class Game {
         this.snake.body.forEach(part => {
             this.ctx.fillRect(part.x * 20, part.y * 20, 20, 20);
         });
+
+        this.ctx.fillStyle = 'red';
+        this.ctx.fillRect(this.food.x * 20, this.food.y * 20, 20, 20);
     }
 }
 
