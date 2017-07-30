@@ -3,7 +3,7 @@ class Snake {
         this.x = 5;
         this.y = 5;
         this.direction = 'right';
-        this.body = [];
+        this.body = [{x: this.x, y: this.y}];
     }
 
     move() {
@@ -32,16 +32,17 @@ class Game {
         this.snake = new Snake;
         this.hasStarted = false;
         this.speed = 5;
+        this.interval = null;
         this.ctx = document.getElementById('game').getContext('2d');
 
         this.startGame();
     }
 
     startGame() {
+        this.render();
         document.addEventListener('keypress', (evt) => {
-            console.log(evt.keyCode);
             if (this.hasStarted === false && evt.keyCode === 32) {
-                this.loop = setInterval(this.loop.bind(this), 1000/this.speed);
+                this.interval = setInterval(this.loop.bind(this), 1000/this.speed);
             }
         });
     }
@@ -49,6 +50,12 @@ class Game {
     clearCanvas() {
         this.ctx.fillStyle = 'white';
         this.ctx.fillRect(0, 0, 400, 400);
+    }
+
+    checkDeath() {
+        if (this.snake.x < 0 || this.snake.x > 20 || this.snake.y < 0 || this.snake.y > 20) {
+            clearInterval(this.interval);
+        }
     }
 
     listenToKeys() {
@@ -69,6 +76,7 @@ class Game {
     }
 
     loop() {
+        this.checkDeath();
         this.clearCanvas();
         this.listenToKeys();
         this.snake.move();
@@ -77,7 +85,9 @@ class Game {
 
     render() {
         this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(this.snake.x * 20, this.snake.y * 20, 20, 20);
+        this.snake.body.forEach(part => {
+            this.ctx.fillRect(part.x * 20, part.y * 20, 20, 20);
+        });
     }
 }
 
