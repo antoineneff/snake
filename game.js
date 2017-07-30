@@ -37,8 +37,17 @@ class Snake {
         return false;
     }
 
+    bitesHisTail() {
+        for (let i = 1; i < this.body.length; i++) {
+            if (this.x === this.body[i].x && this.y === this.body[i].y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     isDead() {
-        if (this.x < 0 || this.x > 19 || this.y < 0 || this.y > 19) {
+        if (this.x < 0 || this.x > 19 || this.y < 0 || this.y > 19 || this.bitesHisTail()) {
             return true;
         }
         return false;
