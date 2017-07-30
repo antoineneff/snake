@@ -2,8 +2,10 @@ class Game {
     constructor() {
         this.snake = new Snake;
         this.food = new Food;
+
         this.hasStarted = false;
         this.speed = 5;
+        this.bl = 20; // Base location
         this.interval = null;
         this.ctx = document.getElementById('game').getContext('2d');
 
@@ -63,17 +65,9 @@ class Game {
     }
 
     render() {
-        this.snake.body.map((part, index) => {
-            if (index === 0) {
-                this.ctx.fillStyle = 'green';
-            } else if (index !== 0 && this.ctx.fillStyle !== 'black'){
-                this.ctx.fillStyle = 'black';
-            }
-
-            this.ctx.fillRect(part.x * 20, part.y * 20, 20, 20);
-        });
+        this.snake.drawSnake(this.ctx, this.bl);
 
         this.ctx.fillStyle = 'red';
-        this.ctx.fillRect(this.food.x * 20, this.food.y * 20, 20, 20);
+        this.ctx.fillRect(this.food.x * this.bl, this.food.y * this.bl, this.bl, this.bl);
     }
 }

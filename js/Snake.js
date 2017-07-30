@@ -49,4 +49,49 @@ class Snake {
     isDead() {
         return (this.x < 0 || this.x > 19 || this.y < 0 || this.y > 19 || this.bitesHisTail());
     }
+
+    drawHead(part, context, bl) {
+        const startAngle = (this.direction === 'right' || this.direction === 'left') ? 0.5 * Math.PI : 0;
+        const endAngle = (this.direction === 'right' || this.direction === 'left') ? 1.5 * Math.PI : Math.PI;;
+
+        context.fillStyle = 'green';
+        context.beginPath();
+        context.arc(
+            (part.x * bl + bl / 2),
+            (part.y * bl + bl / 2),
+            bl / 2,
+            startAngle,
+            endAngle,
+            (this.direction === 'right' || this.direction === 'up')
+        );
+
+        switch (this.direction) {
+            case 'right':
+                context.fillRect(part.x * bl, part.y * bl, bl / 2, bl);
+                break;
+            case 'left':
+                context.fillRect(part.x * bl + bl / 2, part.y * bl, bl / 2, bl);
+                break;
+            case 'up':
+                context.fillRect(part.x * bl, part.y * bl + bl / 2, bl, bl / 2);
+                break;
+            case 'down':
+                context.fillRect(part.x * bl, part.y * bl, bl, bl / 2);
+                break;
+        }
+        context.fill();
+    }
+
+    drawSnake(context, bl) {
+        this.body.map((part, index) => {
+            if (index === 0) {
+                this.drawHead(part, context, bl);
+            } else {
+                if (context.fillStyle !== '#000000') {
+                    context.fillStyle = 'black';
+                }
+                context.fillRect(part.x * bl, part.y * bl, bl, bl);
+            }
+        });
+    }
 }
