@@ -23,6 +23,9 @@ class Game {
         });
 
         document.addEventListener('keydown', evt => {
+            if (!this.hasStarted) {
+                return;
+            }
             if (evt.keyCode === 37 && this.snake.direction !== 'right') {
                 this.snake.direction = 'left';
             }
