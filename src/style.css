@@ -1,0 +1,25 @@
+/* PALETTE
+#BDC8CE LAVENDER GRAY
+#3C6E71 MYRTLE GREEN
+#76CCCC MIDDLE BLUE GREEN
+#504746 QUARTZ
+#F4796B CORAL REEF */
+
+body {
+    height: 100vh;
+    width: 100%;
+    background-color: #504746;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+button {
+    padding: 16px;
+}
+
+canvas {
+    background-color: #BDC8CE;
+}
