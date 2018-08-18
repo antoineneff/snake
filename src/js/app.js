@@ -1,4 +1,4 @@
-import Game from './classes/game'
+import Game from './classes/Game'
 
 const button = document.getElementById('start')
 
